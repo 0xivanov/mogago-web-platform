@@ -88,7 +88,8 @@ function FormPage() {
     phone: '',
     email: '',
     position: '',
-    skills: '',
+    skills: [],
+    skillsWithOwnWords: '',
     age: '',
     city: '',
   });
@@ -101,12 +102,20 @@ function FormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:9090/api/candidate/submit', {
+      const submissionData = {
+        ...formData,
+        skills: selectedSkills.map(skillId => ({
+          name: skillId.split('-')[1]
+        })),
+      };
+      submissionData.age = Number(submissionData.age);
+
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/candidate/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submissionData),
       });
       if (response.ok) {
         navigate('/confirmation');
@@ -166,7 +175,7 @@ function FormPage() {
           </LeftColumn>
           <RightColumn>
             <TextArea
-              name="skills"
+              name="skillsWithOwnWords"
               placeholder="Допълни уменията си със свои думи"
               onChange={handleChange}
               required

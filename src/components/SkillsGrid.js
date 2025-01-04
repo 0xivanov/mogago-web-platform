@@ -6,8 +6,8 @@ const GridContainer = styled.div`
   background-color: #f5f5f5;  
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  margin-bottom: 2rem;
+  width: 90%;
+  margin: 0 auto 2rem auto;
 `;
 
 const CategoriesWrapper = styled.div`
@@ -39,18 +39,25 @@ const SkillsColumn = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 15px;
+  gap: 8px;
   padding: 10px 0;
 `;
 
 const SkillButton = styled.button`
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.3rem;
   border: 1px solid #000;
   background-color: ${props => props.selected ? '#f9c846' : 'white'};
   cursor: pointer;
-  white-space: nowrap;
-  font-size: 0.8rem;
+  white-space: normal;
+  font-size: 0.75rem;
+  min-height: 28px;
+  height: auto;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   
   &:hover {
     background-color: ${props => props.selected ? '#f9c846' : '#f5f5f5'};
