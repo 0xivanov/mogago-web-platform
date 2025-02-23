@@ -282,19 +282,15 @@ const categories = [
 
 interface SkillGridProps {
   selectedCategory: string | null;
+  selectedSkills: string[];
+  onSkillToggle: (skill: string) => void;
 }
 
-const SkillGrid: React.FC<SkillGridProps> = ({ selectedCategory }) => {
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-
-  const toggleSkill = (skill: string) => {
-    setSelectedSkills(prev => 
-      prev.includes(skill) 
-        ? prev.filter(s => s !== skill)
-        : [...prev, skill]
-    );
-  };
-
+const SkillGrid: React.FC<SkillGridProps> = ({ 
+  selectedCategory, 
+  selectedSkills, 
+  onSkillToggle 
+}) => {
   const scrollToTop = (categoryId: string) => {
     const element = document.getElementById(`category-${categoryId}`);
     if (element) {
@@ -332,7 +328,7 @@ const SkillGrid: React.FC<SkillGridProps> = ({ selectedCategory }) => {
                     <Checkbox
                       type="checkbox"
                       checked={selectedSkills.includes(skill)}
-                      onChange={() => toggleSkill(skill)}
+                      onChange={() => onSkillToggle(skill)}
                     />
                     {skill}
                   </SkillItem>

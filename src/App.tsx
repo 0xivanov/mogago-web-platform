@@ -39,6 +39,7 @@ const MainContent = styled.main`
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
   const handleCategorySelect = (categoryId: string) => {
     // Clear any existing highlight
@@ -54,13 +55,25 @@ function App() {
     }, 800); // Adjust this timing based on your scroll animation duration
   };
 
+  const handleSkillToggle = (skill: string) => {
+    setSelectedSkills(prev => 
+      prev.includes(skill) 
+        ? prev.filter(s => s !== skill)
+        : [...prev, skill]
+    );
+  };
+
   return (
     <AppContainer>
       <Header />
       <MainContent>
         <Categories onCategorySelect={handleCategorySelect} />
-        <SkillGrid selectedCategory={selectedCategory} />
-        <ContactForm />
+        <SkillGrid 
+          selectedCategory={selectedCategory}
+          selectedSkills={selectedSkills}
+          onSkillToggle={handleSkillToggle}
+        />
+        <ContactForm selectedSkills={selectedSkills} />
       </MainContent>
       <Footer />
       <MobileNavigation />

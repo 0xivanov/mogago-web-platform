@@ -3,33 +3,29 @@ import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
   background-color: #1B3B35;
-  padding: 2rem 1.5rem;
+  padding: 1.0rem 1.5rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
-  text-align: center;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem 3rem;
-    gap: 2rem;
-    text-align: left;
-  }
+  gap: 1rem;
+  text-align: left;
+  min-width: 100%;
 `;
 
 const SocialLinks = styled.div`
   display: flex;
   gap: 2rem;
-  margin-bottom: 0;
+  margin: 0;
+  min-width: 50px;
+  justify-content: flex-start;
+  flex-shrink: 0;
 `;
 
 const SocialLink = styled.a`
   color: white;
   text-decoration: none;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   opacity: 0.9;
   transition: opacity 0.3s ease;
   
@@ -41,32 +37,28 @@ const SocialLink = styled.a`
 const Copyright = styled.div`
   color: white;
   opacity: 0.8;
-  font-size: 0.9rem;
-  margin-bottom: 0;
+  font-size: 0.75rem;
+  margin: 0;
   flex: 1;
   text-align: center;
-
-  @media (min-width: 768px) {
-    margin: 0;
-  }
+  white-space: nowrap;
 `;
 
 const Links = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    gap: 2rem;
-  }
+  min-width: 120px;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-shrink: 0;
 `;
 
 const Link = styled.a`
   color: white;
   text-decoration: underline;
   opacity: 0.8;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   transition: opacity 0.3s ease;
   white-space: nowrap;
   
@@ -79,14 +71,8 @@ const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <SocialLinks>
-        <SocialLink href="#" target="_blank" rel="noopener noreferrer">
+        <SocialLink href="https://www.instagram.com/mogago.bg/" target="_blank" rel="noopener noreferrer">
           <i className="fab fa-instagram"></i>
-        </SocialLink>
-        <SocialLink href="#" target="_blank" rel="noopener noreferrer">
-          <i className="fab fa-linkedin"></i>
-        </SocialLink>
-        <SocialLink href="#" target="_blank" rel="noopener noreferrer">
-          <i className="fab fa-facebook"></i>
         </SocialLink>
       </SocialLinks>
       

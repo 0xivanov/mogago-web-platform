@@ -7,11 +7,36 @@ const FormContainer = styled.div`
   box-sizing: border-box;
   overflow-x: hidden;
   scroll-margin-top: 100px;
+  position: relative;
   
   @media (min-width: 768px) {
     padding: 2rem;
     width: 100%;
     margin: 0;
+  }
+`;
+
+const Notification = styled.div<{ type: 'success' | 'error' }>`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  background-color: ${props => props.type === 'success' ? '#4CAF50' : '#f44336'};
+  color: white;
+  z-index: 1000;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
 `;
 
@@ -60,13 +85,15 @@ const SubmitButton = styled.button`
   border: none;
   border-radius: 25px;
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
 
   &:hover {
     transform: translateY(-4px);
-    background-color:rgb(121, 102, 248);
+    background-color: rgb(121, 102, 248);
   } 
 `;
 
@@ -85,7 +112,11 @@ interface FormData {
   city: string;
 }
 
-const ContactForm: React.FC = () => {
+interface ContactFormProps {
+  selectedSkills: string[];
+}
+
+const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills }) => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
@@ -94,6 +125,10 @@ const ContactForm: React.FC = () => {
     years: '',
     city: ''
   });
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: 'success' | 'error';
+  } | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -103,14 +138,63 @@ const ContactForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const showNotification = (message: string, type: 'success' | 'error') => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 5000); // Hide after 5 seconds
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+
+    if (selectedSkills.length === 0) {
+      showNotification('Моля, изберете поне едно умение', 'error');
+      return;
+    }
+
+    try {
+      const submissionData = {
+        ...formData,
+        age: Number(formData.years),
+        skills: selectedSkills.map(skill => ({
+          name: skill
+        }))
+      };
+
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/candidate/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
+      });
+
+      if (response.ok) {
+        showNotification('Формата е изпратена успешно! Очаквайте да се свържем с Вас.', 'success');
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          position: '',
+          years: '',
+          city: ''
+        });
+      } else {
+        const errorData = await response.json();
+        showNotification(errorData.message || 'Възникна грешка при изпращането', 'error');
+      }
+    } catch (error) {
+      showNotification('Възникна грешка при свързването със сървъра', 'error');
+      console.error('Error submitting form:', error);
+    }
   };
 
   return (
     <FormContainer id="contact-form" className="contact-form">
+      {notification && (
+        <Notification type={notification.type}>
+          {notification.message}
+        </Notification>
+      )}
       <Title>Изпрати ни уменията си</Title>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -121,6 +205,7 @@ const ContactForm: React.FC = () => {
             value={formData.name}
             onChange={handleChange}
             placeholder="Иван Иванов"
+            required
           />
         </FormGroup>
 
@@ -134,6 +219,7 @@ const ContactForm: React.FC = () => {
             placeholder="25"
             min="0"
             max="120"
+            required
           />
         </FormGroup>
 
@@ -145,6 +231,7 @@ const ContactForm: React.FC = () => {
             value={formData.city}
             onChange={handleChange}
             placeholder="София"
+            required
           />
         </FormGroup>
 
@@ -156,6 +243,7 @@ const ContactForm: React.FC = () => {
             value={formData.phone}
             onChange={handleChange}
             placeholder="+359 ..."
+            required
           />
         </FormGroup>
 
@@ -167,6 +255,7 @@ const ContactForm: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="ivanivanov@gmail.com"
+            required
           />
         </FormGroup>
 
@@ -178,6 +267,7 @@ const ContactForm: React.FC = () => {
             value={formData.position}
             onChange={handleChange}
             placeholder="Шофьор на..."
+            required
           />
         </FormGroup>
 
