@@ -114,9 +114,10 @@ interface FormData {
 
 interface ContactFormProps {
   selectedSkills: string[];
+  skillsWithOwnWords: string;
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills }) => {
+const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwnWords }) => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
@@ -157,7 +158,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills }) => {
         age: Number(formData.years),
         skills: selectedSkills.map(skill => ({
           name: skill
-        }))
+        })),
+        skillsWithOwnWords
       };
 
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/candidate/submit`, {

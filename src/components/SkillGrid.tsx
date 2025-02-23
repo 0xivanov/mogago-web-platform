@@ -5,6 +5,12 @@ const Container = styled.div`
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
+  max-width: 100%;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    padding: 1rem 3rem;
+  }
 `;
 
 const CategorySectionsGrid = styled.div`
@@ -19,6 +25,8 @@ const CategorySectionsGrid = styled.div`
   
   @media (min-width: 1024px) {
     column-count: 3;
+    margin: 0 auto;
+    max-width: 1400px;
   }
 `;
 

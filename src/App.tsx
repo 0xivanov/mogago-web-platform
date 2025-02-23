@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from './components/Header';
 import Categories from './components/Categories';
 import SkillGrid from './components/SkillGrid';
+import CustomSkill from './components/CustomSkill';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import MobileNavigation from './components/MobileNavigation';
@@ -40,6 +41,7 @@ const MainContent = styled.main`
 function App() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [skillsWithOwnWords, setSkillsWithOwnWords] = useState<string>('');
 
   const handleCategorySelect = (categoryId: string) => {
     // Clear any existing highlight
@@ -63,6 +65,10 @@ function App() {
     );
   };
 
+  const handleCustomSkillChange = (text: string) => {
+    setSkillsWithOwnWords(text);
+  };
+
   return (
     <AppContainer>
       <Header />
@@ -73,7 +79,14 @@ function App() {
           selectedSkills={selectedSkills}
           onSkillToggle={handleSkillToggle}
         />
-        <ContactForm selectedSkills={selectedSkills} />
+        <CustomSkill 
+          value={skillsWithOwnWords}
+          onChange={handleCustomSkillChange}
+        />
+        <ContactForm 
+          selectedSkills={selectedSkills}
+          skillsWithOwnWords={skillsWithOwnWords}
+        />
       </MainContent>
       <Footer />
       <MobileNavigation />
