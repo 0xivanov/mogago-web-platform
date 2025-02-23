@@ -15,12 +15,7 @@ const AppContainer = styled.div`
   background-color: #F5F5F5;
   width: 100%;
   max-width: 100vw;
-  // overflow-x: hidden;
   position: relative;
-
-  @media (max-width: 768px) {
-    padding-bottom: 80px; /* Add padding for mobile navigation */
-  }
 `;
 
 const MainContent = styled.main`
@@ -29,7 +24,6 @@ const MainContent = styled.main`
   flex-direction: column;
   width: 100%;
   max-width: 100vw;
-  // overflow-x: hidden;
   position: relative;
   
   @media (min-width: 768px) {

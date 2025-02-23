@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
 const Container = styled.div`
@@ -80,7 +80,7 @@ const CategoryTitle = styled.h3`
 
 const CategoryDescription = styled.p`
   color: #333;
-  margin-bottom: 1rem;
+  margin: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 0.5rem;
 `;
@@ -101,7 +101,7 @@ const ScrollButton = styled.button`
 `;
 
 const CategoryContent = styled.div`
-  padding: 0 1.5rem 1.5rem;
+  padding: 1.5rem 1.5rem;
 `;
 
 const SkillsList = styled.div`
@@ -162,7 +162,7 @@ const categories = [
   {
     id: 'house',
     name: 'Къща',
-    bgColor: '#FFE4E1',
+    bgColor: '#f0ccbc',
     skills: [
       'Гипсокартон',
       'ВИК',
@@ -188,7 +188,7 @@ const categories = [
   {
     id: 'agriculture',
     name: 'Земеделие',
-    bgColor: '#E0EEE0',
+    bgColor: '#c8ccc4',
     skills: [
       'Пчеларство',
       'Отглеждане на зеленчуци',
@@ -210,7 +210,7 @@ const categories = [
   {
     id: 'materials',
     name: 'Материали',
-    bgColor: '#F5F5DC',
+    bgColor: '#e8dcd4',
     skills: [
       'Дървосекачество',
       'Заваряване',
@@ -251,7 +251,7 @@ const categories = [
   {
     id: 'beauty',
     name: 'Красота',
-    bgColor: '#E6E6FA',
+    bgColor: '#e8e4e4',
     skills: [
       'Подстригване',
       'Маникюр',
@@ -271,7 +271,7 @@ const categories = [
   {
     id: 'care',
     name: 'Грижа',
-    bgColor: '#FFE4E1',
+    bgColor: '#f0ccbc',
     skills: [
       'Разхождане на кучета',
       'Домашни любимци',

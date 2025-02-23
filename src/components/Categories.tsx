@@ -10,7 +10,7 @@ const CategoriesContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #333;
   margin-bottom: 1rem;
   font-weight: normal;
@@ -50,12 +50,12 @@ const CategoryButton = styled.button<{ bgColor: string }>`
 `;
 
 const categories = [
-  { id: 'house', name: 'Къща', bgColor: '#FF5733' },
+  { id: 'house', name: 'Къща', bgColor: '#f49c6c' },
   { id: 'agriculture', name: 'Земеделие', bgColor: '#1B3B35' },
   { id: 'materials', name: 'Материал', bgColor: '#D4C5B9' },
   { id: 'textiles', name: 'Платове', bgColor: '#D4C5B9' },
-  { id: 'beauty', name: 'Красота', bgColor: '#E6D7F5' },
-  { id: 'care', name: 'Грижа', bgColor: '#FF5733' }
+  { id: 'beauty', name: 'Красота', bgColor: '#c4bcf0' },
+  { id: 'care', name: 'Грижа', bgColor: '#f49c6c' }
 ];
 
 interface CategoriesProps {
@@ -80,7 +80,7 @@ const Categories: React.FC<CategoriesProps> = ({ onCategorySelect }) => {
 
   return (
     <CategoriesContainer className="categories-section">
-      <Title>категории:</Title>
+      <Title>Категории:</Title>
       <CategoryGrid>
         {categories.map(category => (
           <CategoryButton

@@ -3,31 +3,33 @@ import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
   background-color: #1B3B35;
-  padding: 1.0rem 1.5rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  text-align: left;
-  min-width: 100%;
+  gap: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: auto;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 const SocialLinks = styled.div`
   display: flex;
-  gap: 2rem;
-  margin: 0;
-  min-width: 50px;
-  justify-content: flex-start;
+  gap: 1rem;
   flex-shrink: 0;
 `;
 
 const SocialLink = styled.a`
   color: white;
   text-decoration: none;
-  font-size: 1.4rem;
-  opacity: 0.9;
-  transition: opacity 0.3s ease;
+  font-size: 1.5rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
   
   &:hover {
     opacity: 1;
@@ -37,30 +39,26 @@ const SocialLink = styled.a`
 const Copyright = styled.div`
   color: white;
   opacity: 0.8;
-  font-size: 0.75rem;
-  margin: 0;
-  flex: 1;
+  font-size: 0.8rem;
   text-align: center;
-  white-space: nowrap;
+  line-height: 1.4;
+  flex: 1;
 `;
 
 const Links = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  min-width: 120px;
-  justify-content: flex-end;
   align-items: flex-end;
   flex-shrink: 0;
 `;
 
 const Link = styled.a`
   color: white;
-  text-decoration: underline;
+  text-decoration: none;
   opacity: 0.8;
-  font-size: 0.7rem;
-  transition: opacity 0.3s ease;
-  white-space: nowrap;
+  font-size: 0.8rem;
+  transition: opacity 0.2s ease;
   
   &:hover {
     opacity: 1;

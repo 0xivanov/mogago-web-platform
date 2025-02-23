@@ -37,7 +37,8 @@ const HeaderText = styled.div`
   background: none;
   border: none;
   color: white;
-  font-size: 1rem; /* Adjust font size */
+  font-style: italic;
+  font-size: 2rem; /* Adjust font size */
   margin-bottom: 0.5rem;
 `;
 
