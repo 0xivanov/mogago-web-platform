@@ -17,7 +17,6 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     width: 100vw;
-    //overflow-x: hidden;
   }
 
   body {
@@ -27,11 +26,11 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     line-height: 1.5;
     position: relative;
+    -webkit-tap-highlight-color: transparent;
   }
 
   #root {
     width: 100%;
-    //overflow-x: hidden;
     position: relative;
   }
 

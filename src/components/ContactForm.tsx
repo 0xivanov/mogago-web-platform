@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const FormContainer = styled.div`
-  padding: 1.5rem;
+  padding: 1rem;
   width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
+  scroll-margin-top: 100px;
+  
   @media (min-width: 768px) {
     padding: 2rem;
     width: 100%;
@@ -14,7 +16,7 @@ const FormContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 1.5rem;
   color: #1B3B35;
   padding: 0 1rem;
@@ -61,11 +63,11 @@ const SubmitButton = styled.button`
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  
+
   &:hover {
-    transform: translateY(-2px);
-    background-color: #8A79FA;
-  }
+    transform: translateY(-4px);
+    background-color:rgb(121, 102, 248);
+  } 
 `;
 
 const Disclaimer = styled.p`
@@ -108,7 +110,7 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <FormContainer>
+    <FormContainer id="contact-form" className="contact-form">
       <Title>Изпрати ни уменията си</Title>
       <Form onSubmit={handleSubmit}>
         <FormGroup>

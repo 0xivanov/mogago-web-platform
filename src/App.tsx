@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from './components/Header';
+import Categories from './components/Categories';
 import SkillGrid from './components/SkillGrid';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
+import MobileNavigation from './components/MobileNavigation';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -14,6 +16,10 @@ const AppContainer = styled.div`
   max-width: 100vw;
   // overflow-x: hidden;
   position: relative;
+
+  @media (max-width: 768px) {
+    padding-bottom: 80px; /* Add padding for mobile navigation */
+  }
 `;
 
 const MainContent = styled.main`
@@ -32,14 +38,32 @@ const MainContent = styled.main`
 `;
 
 function App() {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const handleCategorySelect = (categoryId: string) => {
+    // Clear any existing highlight
+    setSelectedCategory(null);
+    
+    // Wait for scroll animation to complete before highlighting
+    setTimeout(() => {
+      setSelectedCategory(categoryId);
+      // Clear the highlight after 2 seconds
+      setTimeout(() => {
+        setSelectedCategory(null);
+      }, 2000);
+    }, 800); // Adjust this timing based on your scroll animation duration
+  };
+
   return (
     <AppContainer>
       <Header />
       <MainContent>
-        <SkillGrid />
+        <Categories onCategorySelect={handleCategorySelect} />
+        <SkillGrid selectedCategory={selectedCategory} />
         <ContactForm />
       </MainContent>
       <Footer />
+      <MobileNavigation />
     </AppContainer>
   );
 }
