@@ -51,7 +51,7 @@ const CategoryButton = styled.button<{ bgColor: string }>`
 
 const categories = [
   { id: 'house', name: 'Къща', bgColor: '#FF5733' },
-  { id: 'agriculture', name: 'Земя', bgColor: '#1B3B35' },
+  { id: 'agriculture', name: 'Земеделие', bgColor: '#1B3B35' },
   { id: 'materials', name: 'Материал', bgColor: '#D4C5B9' },
   { id: 'textiles', name: 'Платове', bgColor: '#D4C5B9' },
   { id: 'beauty', name: 'Красота', bgColor: '#E6D7F5' },

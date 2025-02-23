@@ -22,8 +22,8 @@ const CategorySectionsGrid = styled.div`
   }
 `;
 
-const CategorySection = styled.div<{ bgColor: string }>`
-  background-color: ${props => props.bgColor};
+const CategorySection = styled.div<{ $bgColor: string }>`
+  background-color: ${props => props.$bgColor};
   border-radius: 15px;
   box-sizing: border-box;
   position: relative;
@@ -44,10 +44,10 @@ const textScaleAnimation = keyframes`
   }
 `;
 
-const StickyHeader = styled.div<{ bgColor: string; isHighlighted: boolean }>`
+const StickyHeader = styled.div<{ $bgColor: string }>`
   position: sticky;
   top: 0;
-  background-color: ${props => props.bgColor};
+  background-color: ${props => props.$bgColor};
   padding: 1.5rem 1.5rem 0rem;
   border-radius: 15px;
   z-index: 10;
@@ -56,10 +56,10 @@ const StickyHeader = styled.div<{ bgColor: string; isHighlighted: boolean }>`
   align-items: flex-start;
 `;
 
-const TitleContainer = styled.div<{ isHighlighted: boolean }>`
+const TitleContainer = styled.div<{ $isHighlighted: boolean }>`
   flex: 1;
   transform-origin: left center;
-  ${props => props.isHighlighted && css`
+  ${props => props.$isHighlighted && css`
     animation: ${textScaleAnimation} 2s ease;
   `}
 `;
@@ -234,7 +234,6 @@ const categories = [
       'Работа с кожи',
       'Бродиране',
       'Правене на килими',
-      'Плетене',
       'Ъпсаиклинг',
       'Рисуване върху плат',
       'Претапициране',
@@ -304,14 +303,13 @@ const SkillGrid: React.FC<SkillGridProps> = ({
         {categories.map(category => (
           <CategorySection 
             key={category.id} 
-            bgColor={category.bgColor}
+            $bgColor={category.bgColor}
             id={`category-${category.id}`}
           >
             <StickyHeader 
-              bgColor={category.bgColor}
-              isHighlighted={selectedCategory === category.id}
+              $bgColor={category.bgColor}
             >
-              <TitleContainer isHighlighted={selectedCategory === category.id}>
+              <TitleContainer $isHighlighted={selectedCategory === category.id}>
                 <CategoryTitle>{category.name}</CategoryTitle>
                 <CategoryDescription>
                   Избери от тези умения или добави свое.
