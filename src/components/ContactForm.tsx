@@ -97,10 +97,62 @@ const SubmitButton = styled.button`
   } 
 `;
 
-const Disclaimer = styled.p`
+const ConsentContainer = styled.div`
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+`;
+
+const Checkbox = styled.input`
+  margin-top: 0.25rem;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: #1B3B35;
+`;
+
+const ConsentText = styled.div<{ $isExpanded: boolean }>`
   font-size: 0.8rem;
   color: #666;
-  margin-top: 1rem;
+  line-height: 1.4;
+  max-height: ${props => props.$isExpanded ? '200px' : '42px'};
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: ${props => props.$isExpanded ? '0' : '24px'};
+    background: ${props => props.$isExpanded ? 'none' : 'linear-gradient(to bottom, transparent, #F5F5F5)'};
+    pointer-events: none;
+  }
+`;
+
+const ExpandButton = styled.button`
+  background: none;
+  border: none;
+  color: #1B3B35;
+  font-size: 0.8rem;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 0.25rem;
+
+  &:hover {
+    color: #2a5a50;
+  }
 `;
 
 interface FormData {
@@ -130,6 +182,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
     message: string;
     type: 'success' | 'error';
   } | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [hasConsent, setHasConsent] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -144,8 +198,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
     setTimeout(() => setNotification(null), 5000); // Hide after 5 seconds
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!hasConsent) {
+      alert('Моля, съгласете се с условията за обработка на лични данни преди да продължите.');
+      return;
+    }
 
     if (selectedSkills.length === 0) {
       showNotification('Моля, изберете поне едно умение', 'error');
@@ -188,6 +247,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
       showNotification('Възникна грешка при свързването със сървъра', 'error');
       console.error('Error submitting form:', error);
     }
+  };
+
+  const handleExpandClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsExpanded(!isExpanded);
   };
 
   return (
@@ -273,9 +338,25 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
           />
         </FormGroup>
 
-        <Disclaimer>
-          при натискане на "Изпрати", се съгласявате да споделите информацията си и да я запазим.
-        </Disclaimer>
+        <ConsentContainer>
+          <CheckboxContainer onClick={() => setHasConsent(!hasConsent)}>
+            <Checkbox 
+              type="checkbox" 
+              checked={hasConsent}
+              onChange={() => setHasConsent(!hasConsent)}
+              required
+            />
+            <ConsentText $isExpanded={isExpanded}>
+              Декларирам, че съм съгласен/а личните данни, предоставени от мен на тази платформа, да бъдат обработвани от Mogago като администратор на лични данни, до оттегляне на предоставеното от мен съгласие, с цел профилиране на моите умения и предоставяне на публично достъпна информация за потенциални професионални възможности на потенциални работодатели въз основа на предоставените умения.
+            </ConsentText>
+          </CheckboxContainer>
+          <ExpandButton 
+            type="button" 
+            onClick={handleExpandClick}
+          >
+            {isExpanded ? 'Покажи по-малко' : 'Прочети повече'}
+          </ExpandButton>
+        </ConsentContainer>
 
         <SubmitButton type="submit">Изпрати</SubmitButton>
       </Form>
