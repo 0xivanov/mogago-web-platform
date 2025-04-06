@@ -95,6 +95,12 @@ const SubmitButton = styled.button`
     transform: translateY(-4px);
     background-color: rgb(121, 102, 248);
   } 
+
+  &:disabled {
+    background-color: #C3B9EA;
+    cursor: not-allowed;
+    transform: none;
+  }
 `;
 
 const ConsentContainer = styled.div`
@@ -184,6 +190,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
   } | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [hasConsent, setHasConsent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -201,6 +208,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
+    if (isSubmitting) return; // Prevent double submission
     if (!hasConsent) {
       alert('Моля, съгласете се с условията за обработка на лични данни преди да продължите.');
       return;
@@ -210,6 +218,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
       showNotification('Моля, изберете поне едно умение', 'error');
       return;
     }
+
+    setIsSubmitting(true);
 
     try {
       const submissionData = {
@@ -239,6 +249,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
           years: '',
           city: ''
         });
+        setHasConsent(false);
       } else {
         const errorData = await response.json();
         showNotification(errorData.message || 'Възникна грешка при изпращането', 'error');
@@ -246,6 +257,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
     } catch (error) {
       showNotification('Възникна грешка при свързването със сървъра', 'error');
       console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -358,7 +371,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
           </ExpandButton>
         </ConsentContainer>
 
-        <SubmitButton type="submit">Изпрати</SubmitButton>
+        <SubmitButton type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Изпращане...' : 'Изпрати'}
+        </SubmitButton>
       </Form>
     </FormContainer>
   );
