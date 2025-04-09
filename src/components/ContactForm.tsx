@@ -231,16 +231,15 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
         skillsWithOwnWords
       };
 
-      // const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/candidate/submit`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(submissionData),
-      // });
-      const response = {
-        ok: true,
-      };
+      console.log(JSON.stringify(submissionData));
+
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/candidate/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
+      });
 
       if (response.ok) {
         showNotification('Формата е изпратена успешно! Очаквайте да се свържем с Вас.', 'success');
@@ -254,8 +253,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
         });
         setHasConsent(false);
       } else {
-        // const errorData = await response.json();
-        // showNotification(errorData.message || 'Възникна грешка при изпращането', 'error');
+        const errorData = await response.json();
+        showNotification(errorData.message || 'Възникна грешка при изпращането', 'error');
       }
     } catch (error) {
       showNotification('Възникна грешка при свързването със сървъра', 'error');
