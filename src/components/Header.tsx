@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FiHome, FiPhone, FiInfo, FiBookOpen } from 'react-icons/fi'; // ✅ ADD THIS
+import { Home, Phone, Info, BookOpen } from 'lucide-react';
+
 
 
 const HeaderContainer = styled.header`
@@ -116,20 +117,20 @@ const Header: React.FC = () => {
       {menuOpen && (
         <DropdownMenu>
           <MenuItem to="/" onClick={() => setMenuOpen(false)}>
-            <FiHome /> Начало
+            <Home size={18} /> Начало
           </MenuItem>
           <MenuItem to="/contacts" onClick={() => setMenuOpen(false)}>
-            <FiPhone /> Контакти
+            <Phone size={18} /> Контакти
           </MenuItem>
           <MenuItem to="/about" onClick={() => setMenuOpen(false)}>
-            <FiInfo /> За Нас
+            <Info size={18} /> За Нас
           </MenuItem>
           <MenuItem to="/courses" onClick={() => setMenuOpen(false)}>
-            <FiBookOpen /> Обучения
+            <BookOpen size={18} /> Обучения
           </MenuItem>
         </DropdownMenu>
       )}
-
+      
     </HeaderContainer>
   );
 };
