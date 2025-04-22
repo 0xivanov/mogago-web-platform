@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
 import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
@@ -56,7 +58,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <GlobalStyle />
-    <App />
+    <BrowserRouter>
+      <GlobalStyle />
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
-); 
+);

@@ -7,6 +7,12 @@ import CustomSkill from './components/CustomSkill';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import MobileNavigation from './components/MobileNavigation';
+import { Routes, Route } from 'react-router-dom';
+import Contacts from './pages/Contacts';
+import About from './pages/About';
+import Courses from './pages/courses';
+
+
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -67,25 +73,38 @@ function App() {
     <AppContainer>
       <Header />
       <MainContent>
-        <Categories onCategorySelect={handleCategorySelect} />
-        <SkillGrid 
-          selectedCategory={selectedCategory}
-          selectedSkills={selectedSkills}
-          onSkillToggle={handleSkillToggle}
-        />
-        <CustomSkill 
-          value={skillsWithOwnWords}
-          onChange={handleCustomSkillChange}
-        />
-        <ContactForm 
-          selectedSkills={selectedSkills}
-          skillsWithOwnWords={skillsWithOwnWords}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Categories onCategorySelect={handleCategorySelect} />
+                <SkillGrid 
+                  selectedCategory={selectedCategory}
+                  selectedSkills={selectedSkills}
+                  onSkillToggle={handleSkillToggle}
+                />
+                <CustomSkill 
+                  value={skillsWithOwnWords}
+                  onChange={handleCustomSkillChange}
+                />
+                <ContactForm 
+                  selectedSkills={selectedSkills}
+                  skillsWithOwnWords={skillsWithOwnWords}
+                />
+              </>
+            }
+          />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/courses" element={<Courses />} />
+        </Routes>
       </MainContent>
       <Footer />
       <MobileNavigation />
     </AppContainer>
   );
+  
 }
 
 export default App; 
