@@ -10,7 +10,7 @@ import MobileNavigation from './components/MobileNavigation';
 import { Routes, Route } from 'react-router-dom';
 import Contacts from './pages/Contacts';
 import About from './pages/About';
-import Courses from './pages/courses';
+import Courses from './pages/Courses';
 
 
 
