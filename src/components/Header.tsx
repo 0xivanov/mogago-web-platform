@@ -3,12 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiHome, FiPhone, FiInfo, FiBookOpen } from 'react-icons/fi'; // ✅ ADD THIS
 
-const HomeIcon = () => <FiHome />;
-const PhoneIcon = () => <FiPhone />;
-const InfoIcon = () => <FiInfo />;
-const BookIcon = () => <FiBookOpen />;
-
-
 
 const HeaderContainer = styled.header`
   background-color: #1B3B35;
