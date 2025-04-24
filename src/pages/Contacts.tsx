@@ -157,7 +157,6 @@ const ConfirmationMessage = styled.div`
   }
 `;
 
-
 const Contacts: React.FC = () => {
   const [formData, setFormData] = useState({ from_name: '', from_email: '', message: '' });
   const [sent, setSent] = useState(false);

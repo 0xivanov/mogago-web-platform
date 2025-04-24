@@ -10,9 +10,6 @@ import MobileNavigation from './components/MobileNavigation';
 import { Routes, Route } from 'react-router-dom';
 import Contacts from './pages/Contacts';
 import About from './pages/About';
-import Courses from './pages/Courses';
-
-
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -97,7 +94,6 @@ function App() {
           />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/about" element={<About />} />
-          <Route path="/courses" element={<Courses />} />
         </Routes>
       </MainContent>
       <Footer />

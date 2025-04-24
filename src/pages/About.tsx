@@ -158,21 +158,6 @@ const About: React.FC = () => {
               <em>Защото всеки може. И всеки заслужава да има своя шанс.</em>
             </TextContainer>
           </Description>
-
-          <CreatorsGrid>
-            <CreatorCard>
-              <PlaceholderImage />
-              <Name>Име 1</Name>
-            </CreatorCard>
-            <CreatorCard>
-              <PlaceholderImage />
-              <Name>Име 2</Name>
-            </CreatorCard>
-            <CreatorCard>
-              <PlaceholderImage />
-              <Name>Име 3</Name>
-            </CreatorCard>
-          </CreatorsGrid>
         </Card>
       </CardWrapper>
     </PageWrapper>

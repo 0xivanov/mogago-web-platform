@@ -125,9 +125,6 @@ const Header: React.FC = () => {
           <MenuItem to="/about" onClick={() => setMenuOpen(false)}>
             <Info size={18} /> За Нас
           </MenuItem>
-          <MenuItem to="/courses" onClick={() => setMenuOpen(false)}>
-            <BookOpen size={18} /> Обучения
-          </MenuItem>
         </DropdownMenu>
       )}
       
