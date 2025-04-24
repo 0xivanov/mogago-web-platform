@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import emailjs from '@emailjs/browser';
 
 const ContactsWrapper = styled.div`
   background-color: #FFF4E5;
