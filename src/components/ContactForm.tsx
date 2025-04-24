@@ -16,7 +16,7 @@ const FormContainer = styled.div`
   }
 `;
 
-const Notification = styled.div<{ type: 'success' | 'error' }>`
+export const Notification = styled.div<{ type: 'success' | 'error' }>`
   position: fixed;
   top: 20px;
   right: 20px;
@@ -230,8 +230,6 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
         })),
         skillsWithOwnWords
       };
-
-      console.log(JSON.stringify(submissionData));
 
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/candidate/submit`, {
         method: 'POST',

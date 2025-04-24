@@ -159,35 +159,48 @@ const ConfirmationMessage = styled.div`
 
 
 const Contacts: React.FC = () => {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ from_name: '', from_email: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
-    emailjs.send(
-      'service_ijlpij3',
-      'template_sbia0li',
-      {
-        from_name: form.name,
-        from_email: form.email,
-        message: form.message,
-      },
-      'eRM7zJVwA7NRr_FHv'
-    ).then(() => {
-      setSent(true); // ✅ show confirmation
-      setForm({ name: '', email: '', message: '' });
     
-      setTimeout(() => setSent(false), 4000); // hide after 4 seconds
-    }).catch((error: any) => {
-      console.error('EmailJS Error:', error);
-      alert('Възникна грешка при изпращането. Моля, опитайте отново.');
-    });
+    if (isSubmitting) return; // Prevent double submission
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/contact/send-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFormData({
+          from_name: '',
+          from_email: '',
+          message: ''
+        });
+        setSent(true);
+      } else {
+        const errorData = await response.json();
+        console.error('Error submitting form:', errorData);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   return (
     <ContactsWrapper>
@@ -222,25 +235,25 @@ const Contacts: React.FC = () => {
 
           <Title>Изпратете ни съобщение</Title>
           <Input
-            name="name"
+            name="from_name"
             type="text"
             placeholder="Вашето име"
-            value={form.name}
+            value={formData.from_name}
             onChange={handleChange}
             required
           />
           <Input
-            name="email"
+            name="from_email"
             type="email"
             placeholder="Вашият имейл"
-            value={form.email}
+            value={formData.from_email}
             onChange={handleChange}
             required
           />
           <Textarea
             name="message"
             placeholder="Вашето съобщение"
-            value={form.message}
+            value={formData.message}
             onChange={handleChange}
             required
           />
