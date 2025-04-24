@@ -16,7 +16,7 @@ const FormContainer = styled.div`
   }
 `;
 
-const Notification = styled.div<{ type: 'success' | 'error' }>`
+export const Notification = styled.div<{ type: 'success' | 'error' }>`
   position: fixed;
   top: 20px;
   right: 20px;
@@ -231,18 +231,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
         skillsWithOwnWords
       };
 
-      console.log(JSON.stringify(submissionData));
-
-      // const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/candidate/submit`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(submissionData),
-      // });
-      const response = {
-        ok: true
-      }
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/candidate/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
+      });
 
       if (response.ok) {
         showNotification('Формата е изпратена успешно! Очаквайте да се свържем с Вас.', 'success');
@@ -256,9 +251,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ selectedSkills, skillsWithOwn
         });
         setHasConsent(false);
       } else {
-        // const errorData = await response.json();
-        // showNotification(errorData.message || 'Възникна грешка при изпращането', 'error');
-        showNotification('Възникна грешка при изпращането', 'error');
+        const errorData = await response.json();
+        showNotification(errorData.message || 'Възникна грешка при изпращането', 'error');
       }
     } catch (error) {
       showNotification('Възникна грешка при свързването със сървъра', 'error');
