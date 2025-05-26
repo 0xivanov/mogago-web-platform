@@ -10,12 +10,19 @@ import MobileNavigation from './components/MobileNavigation';
 import { Routes, Route } from 'react-router-dom';
 import Contacts from './pages/Contacts';
 import About from './pages/About';
+import BusinessLogin from './pages/Business/Login';
+import BusinessRegister from './pages/Business/Register';
+import BusinessDashboard from './pages/Business/Dashboard';
+import AdminLogin from './pages/Admin/Login';
+import AdminDashboard from './pages/Admin/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthContext';
 
 const AppContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #F5F5F5;
+  background-color: #FFF4E5;
   width: 100%;
   max-width: 100vw;
   position: relative;
@@ -35,7 +42,7 @@ const MainContent = styled.main`
   }
 `;
 
-function App() {
+const App: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [skillsWithOwnWords, setSkillsWithOwnWords] = useState<string>('');
@@ -67,40 +74,64 @@ function App() {
   };
 
   return (
-    <AppContainer>
-      <Header />
-      <MainContent>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Categories onCategorySelect={handleCategorySelect} />
-                <SkillGrid 
-                  selectedCategory={selectedCategory}
-                  selectedSkills={selectedSkills}
-                  onSkillToggle={handleSkillToggle}
-                />
-                <CustomSkill 
-                  value={skillsWithOwnWords}
-                  onChange={handleCustomSkillChange}
-                />
-                <ContactForm 
-                  selectedSkills={selectedSkills}
-                  skillsWithOwnWords={skillsWithOwnWords}
-                />
-              </>
-            }
-          />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </MainContent>
-      <Footer />
-      <MobileNavigation />
-    </AppContainer>
+    <AuthProvider>
+      <AppContainer>
+        <Header />
+        <MainContent>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Categories onCategorySelect={handleCategorySelect} />
+                  <SkillGrid 
+                    selectedCategory={selectedCategory}
+                    selectedSkills={selectedSkills}
+                    onSkillToggle={handleSkillToggle}
+                  />
+                  <CustomSkill 
+                    value={skillsWithOwnWords}
+                    onChange={handleCustomSkillChange}
+                  />
+                  <ContactForm 
+                    selectedSkills={selectedSkills}
+                    skillsWithOwnWords={skillsWithOwnWords}
+                  />
+                </>
+              }
+            />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/about" element={<About />} />
+            
+            {/* Business Routes */}
+            <Route path="/business/login" element={<BusinessLogin />} />
+            <Route path="/business/register" element={<BusinessRegister />} />
+            <Route 
+              path="/business/dashboard" 
+              element={
+                <ProtectedRoute requiredRole="business">
+                  <BusinessDashboard />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route 
+              path="/admin/dashboard" 
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
+          </Routes>
+        </MainContent>
+        <Footer />
+        <MobileNavigation />
+      </AppContainer>
+    </AuthProvider>
   );
-  
-}
+};
 
 export default App; 
