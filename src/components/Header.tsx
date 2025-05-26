@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Home, Phone, Info, BookOpen } from 'lucide-react';
+import { Home, Phone, Info, BookOpen, Briefcase } from 'lucide-react';
 
 
 
@@ -124,6 +124,9 @@ const Header: React.FC = () => {
           </MenuItem>
           <MenuItem to="/about" onClick={() => setMenuOpen(false)}>
             <Info size={18} /> За Нас
+          </MenuItem>
+          <MenuItem to="/business/login" onClick={() => setMenuOpen(false)}>
+            <Briefcase size={18} /> За бизнеси
           </MenuItem>
         </DropdownMenu>
       )}
