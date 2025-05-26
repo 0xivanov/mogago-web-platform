@@ -22,7 +22,7 @@ const AppContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #F5F5F5;
+  background-color: #FFF4E5;
   width: 100%;
   max-width: 100vw;
   position: relative;

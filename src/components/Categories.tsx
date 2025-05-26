@@ -6,7 +6,7 @@ const CategoriesContainer = styled.div`
   width: 100%;
   box-sizing: border-box;
   scroll-margin-top: 100px;
-  background-color: #F5F2ED;
+  background-color: #FFF4E5;
 `;
 
 const Title = styled.h2`

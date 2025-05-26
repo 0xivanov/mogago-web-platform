@@ -210,14 +210,27 @@ interface Candidate {
   skillsWithOwnWords: string;
 }
 
+interface JobVacancy {
+  id: number;
+  title: string;
+  description: string;
+  requirements: string;
+  location: string;
+  salary: string;
+  businessId: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface CandidatesBySkills {
   [skill: string]: Candidate[];
 }
 
 const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'all' | 'bySkills' | 'codes'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'bySkills' | 'codes' | 'vacancies'>('all');
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [candidatesBySkills, setCandidatesBySkills] = useState<CandidatesBySkills>({});
+  const [jobVacancies, setJobVacancies] = useState<JobVacancy[]>([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [generatedCode, setGeneratedCode] = useState('');
@@ -260,6 +273,27 @@ const AdminDashboard: React.FC = () => {
       }
     } catch (err) {
       setError('An error occurred while fetching candidates by skills');
+    }
+  };
+
+  const fetchJobVacancies = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/admin/job-vacancies`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data[2])
+        setJobVacancies(data);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || 'Failed to fetch job vacancies');
+      }
+    } catch (err) {
+      setError('An error occurred while fetching job vacancies');
     }
   };
 
@@ -306,6 +340,8 @@ const AdminDashboard: React.FC = () => {
       fetchCandidates();
     } else if (activeTab === 'bySkills') {
       fetchCandidatesBySkills();
+    } else if (activeTab === 'vacancies') {
+      fetchJobVacancies();
     }
   }, [activeTab]);
 
@@ -402,6 +438,43 @@ const AdminDashboard: React.FC = () => {
     </Card>
   );
 
+  const renderJobVacancies = () => (
+    <Card>
+      <h2>Всички обяви за работа</h2>
+      <Table>
+        <thead>
+          <tr>
+            <Th>Заглавие</Th>
+            <Th>Локация</Th>
+            <Th>Възнаграждение</Th>
+            <Th>Изисквания</Th>
+            <Th>Създадена на</Th>
+          </tr>
+        </thead>
+        <tbody>
+          {jobVacancies.map((vacancy, index) => (
+            <tr key={vacancy.id}>
+              <Td data-last-row={index === jobVacancies.length - 1}>{vacancy.title}</Td>
+              <Td data-last-row={index === jobVacancies.length - 1}>{vacancy.location}</Td>
+              <Td data-last-row={index === jobVacancies.length - 1}>{vacancy.salary}</Td>
+              <Td data-last-row={index === jobVacancies.length - 1}>{vacancy.requirements}</Td>
+              <Td data-last-row={index === jobVacancies.length - 1}>
+                {new Date(vacancy.createdAt).toLocaleDateString('bg-BG')}
+              </Td>
+            </tr>
+          ))}
+          {jobVacancies.length === 0 && (
+            <tr>
+              <Td colSpan={5} style={{ textAlign: 'center' }} data-last-row={true}>
+                Няма намерени обяви
+              </Td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
+    </Card>
+  );
+
   return (
     <PageWrapper>
       <Container>
@@ -429,11 +502,18 @@ const AdminDashboard: React.FC = () => {
           >
             Кодове за активация
           </Tab>
+          <Tab 
+            active={activeTab === 'vacancies'} 
+            onClick={() => setActiveTab('vacancies')}
+          >
+            Обяви за работа
+          </Tab>
         </TabContainer>
 
         {activeTab === 'all' && renderAllCandidates()}
         {activeTab === 'bySkills' && renderCandidatesBySkills()}
         {activeTab === 'codes' && renderActivationCodes()}
+        {activeTab === 'vacancies' && renderJobVacancies()}
       </Container>
     </PageWrapper>
   );
